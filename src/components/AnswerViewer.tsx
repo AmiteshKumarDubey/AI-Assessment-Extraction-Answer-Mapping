@@ -120,9 +120,9 @@ export const AnswerViewer: React.FC<AnswerViewerProps> = ({
 
         {/* Multi-page Region Jumps */}
         {activeAnswer?.multiPageRegions && activeAnswer.multiPageRegions.length > 1 && viewMode === 'answer_sheet' && (
-          <div className="hidden md:flex items-center gap-1.5 bg-slate-100 px-2.5 py-1 rounded-xl border border-purple-200">
-            <span className="text-[11px] text-purple-700 font-bold flex items-center gap-1">
-              <Layers className="w-3 h-3" /> Multi-page Span:
+          <div className="hidden md:flex items-center gap-1.5 bg-orange-50 px-2.5 py-1 rounded-xl border border-orange-200">
+            <span className="text-[11px] text-orange-700 font-bold flex items-center gap-1">
+              <Layers className="w-3 h-3 text-orange-500" /> Multi-page Span:
             </span>
             {activeAnswer.multiPageRegions.map((region) => (
               <button
@@ -130,8 +130,8 @@ export const AnswerViewer: React.FC<AnswerViewerProps> = ({
                 onClick={() => setCurrentPage(region.pageIndex)}
                 className={`px-2 py-0.5 rounded-lg text-[10px] font-extrabold transition-all ${
                   currentPage === region.pageIndex
-                    ? 'bg-purple-600 text-white shadow-xs'
-                    : 'bg-white text-slate-700 border border-slate-200 hover:bg-purple-50'
+                    ? 'bg-orange-500 text-white shadow-xs'
+                    : 'bg-white text-slate-700 border border-slate-200 hover:bg-orange-100'
                 }`}
               >
                 Page {region.pageIndex + 1}
@@ -175,14 +175,14 @@ export const AnswerViewer: React.FC<AnswerViewerProps> = ({
       {/* Synchronized Custom Canvas Scroll Workspace */}
       <div 
         ref={containerRef}
-        className="flex-1 overflow-auto p-6 flex items-start justify-center relative bg-[#f8fafc] custom-scrollbar"
+        className="flex-1 overflow-auto p-5 flex items-start justify-center relative bg-[#f8fafc] custom-scrollbar"
       >
         {activeDocSrc ? (
           <div 
             className="relative transition-transform duration-200 ease-out origin-top shadow-xl rounded-2xl border border-slate-200 bg-white inline-block overflow-hidden"
             style={{ transform: `scale(${zoomLevel})` }}
           >
-            {/* Render document page clean image without raw browser PDF toolbar */}
+            {/* Render document page image */}
             <img
               src={activeDocSrc}
               alt=""
@@ -218,7 +218,7 @@ export const AnswerViewer: React.FC<AnswerViewerProps> = ({
                         height: `${box.height}%`,
                       }}
                     >
-                      {/* Bounding Box Badges Flex Wrapper (Side-by-side without overlapping) */}
+                      {/* Bounding Box Badges Flex Wrapper */}
                       <div className="absolute -top-3.5 left-2 z-40 flex flex-row items-center gap-1.5 whitespace-nowrap pointer-events-none">
                         <span className={`px-2 py-0.5 rounded-md font-mono font-bold text-[11px] shadow-sm flex items-center gap-1 ${
                           isActive

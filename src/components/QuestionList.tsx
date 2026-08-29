@@ -62,7 +62,7 @@ export const QuestionList: React.FC<QuestionListProps> = ({
   return (
     <div className="flex flex-col h-full bg-[#f8fafc] border-r border-slate-200 text-slate-900 w-full lg:w-96 shrink-0">
       {/* Sidebar Header & Search */}
-      <div className="p-4 border-b border-slate-200 bg-white space-y-3">
+      <div className="p-3.5 border-b border-slate-200 bg-white space-y-2.5">
         <div className="flex items-center justify-between">
           <h3 className="font-extrabold text-xs uppercase tracking-wider text-slate-700 flex items-center gap-2">
             <Layers className="w-4 h-4 text-orange-500" />
@@ -85,7 +85,7 @@ export const QuestionList: React.FC<QuestionListProps> = ({
       </div>
 
       {/* Questions Scrollable List */}
-      <div className="flex-1 overflow-y-auto p-3 space-y-2.5 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto p-3 space-y-2 custom-scrollbar">
         {filteredQuestions.map((q) => {
           const ans = answerByQuestionId.get(q.id);
           const isSelected = selectedQuestionId === q.id;
@@ -97,7 +97,7 @@ export const QuestionList: React.FC<QuestionListProps> = ({
             <div
               key={q.id}
               onClick={() => onSelectQuestion(q.id, ans?.id || null)}
-              className={`group p-3.5 rounded-2xl border transition-all cursor-pointer relative overflow-hidden ${
+              className={`group p-3 rounded-2xl border transition-all cursor-pointer relative overflow-hidden ${
                 isSelected
                   ? 'bg-white border-orange-500 shadow-md ring-1 ring-orange-500/30'
                   : 'bg-white border-slate-200/80 hover:border-slate-300 hover:shadow-xs'
@@ -110,7 +110,7 @@ export const QuestionList: React.FC<QuestionListProps> = ({
 
               {/* Header row: Question Number + Marks */}
               <div className="flex items-center justify-between gap-2 mb-1.5">
-                <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex items-center gap-1.5 flex-wrap">
                   {/* Number Badge */}
                   <span className={`px-2.5 py-0.5 rounded-lg font-mono font-bold text-xs ${
                     isUnanswered 
@@ -124,7 +124,7 @@ export const QuestionList: React.FC<QuestionListProps> = ({
 
                   {/* Sub-part Tag */}
                   {isSubPart && (
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-200">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-orange-50 text-orange-700 border border-orange-200">
                       Sub-part
                     </span>
                   )}
@@ -165,13 +165,13 @@ export const QuestionList: React.FC<QuestionListProps> = ({
 
               {/* Page Indicator Footer */}
               {ans && ans.status === 'graded' && (
-                <div className="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-medium">
+                <div className="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-medium">
                   <span className="flex items-center gap-1 text-slate-600">
                     <CheckCircle2 className="w-3 h-3 text-emerald-600" />
                     Mapped on Page {ans.pageIndex + 1}
                   </span>
                   {ans.multiPageRegions && ans.multiPageRegions.length > 1 && (
-                    <span className="px-1.5 py-0.5 rounded bg-purple-50 text-purple-700 text-[10px] font-bold">
+                    <span className="px-1.5 py-0.5 rounded bg-orange-50 text-orange-700 border border-orange-200 text-[10px] font-bold">
                       Multi-page ({ans.multiPageRegions.length} pages)
                     </span>
                   )}
@@ -183,9 +183,9 @@ export const QuestionList: React.FC<QuestionListProps> = ({
 
         {/* Unmapped Answers Section */}
         {showUnmappedList && unmappedAnswers.length > 0 && (
-          <div className="pt-4 border-t border-slate-200 space-y-2">
-            <h4 className="text-xs font-extrabold text-purple-700 uppercase tracking-wider flex items-center gap-1.5 px-1">
-              <HelpCircle className="w-3.5 h-3.5" />
+          <div className="pt-3 border-t border-slate-200 space-y-2">
+            <h4 className="text-xs font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-1.5 px-1">
+              <HelpCircle className="w-3.5 h-3.5 text-orange-500" />
               Unmapped Student Responses ({unmappedAnswers.length})
             </h4>
 
@@ -197,12 +197,12 @@ export const QuestionList: React.FC<QuestionListProps> = ({
                   onClick={() => onSelectQuestion(null, uAns.id)}
                   className={`p-3 rounded-2xl border transition-all cursor-pointer ${
                     isSelected
-                      ? 'bg-purple-50 border-purple-500 text-purple-950 shadow-sm'
-                      : 'bg-white border-slate-200 text-slate-700 hover:border-purple-300'
+                      ? 'bg-orange-50 border-orange-500 text-orange-950 shadow-xs'
+                      : 'bg-white border-slate-200 text-slate-700 hover:border-orange-300'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-800 border border-purple-200">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-orange-100 text-orange-800 border border-orange-200">
                       {uAns.detectedQuestionLabel}
                     </span>
                     <span className="text-[11px] text-slate-500 font-mono">Page {uAns.pageIndex + 1}</span>

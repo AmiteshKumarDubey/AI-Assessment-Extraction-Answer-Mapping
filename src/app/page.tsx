@@ -9,15 +9,17 @@ import {
   FilterStatus 
 } from '@/types/assessment';
 import { DEMO_ASSESSMENT } from '@/lib/demoData';
-import { Sidebar } from '@/components/Sidebar';
+import { Sidebar, NavTab } from '@/components/Sidebar';
 import { Header } from '@/components/Header';
 import { FileUploadSection } from '@/components/FileUploadSection';
 import { SummaryHeader } from '@/components/SummaryHeader';
 import { QuestionList } from '@/components/QuestionList';
 import { AnswerViewer } from '@/components/AnswerViewer';
 import { QuestionDetailPanel } from '@/components/QuestionDetailPanel';
+import { StaticPageViews } from '@/components/StaticPageViews';
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState<NavTab>('exams');
   const [assessmentData, setAssessmentData] = useState<AssessmentData | null>(null);
   const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
   const [selectedAnswerId, setSelectedAnswerId] = useState<string | null>(null);
@@ -210,7 +212,10 @@ export default function Home() {
   return (
     <div className="flex h-screen overflow-hidden bg-[#f8fafc] font-sans text-slate-900">
       {/* Left App Shell Sidebar (Figma Design) */}
-      <Sidebar />
+      <Sidebar 
+        activeTab={activeTab} 
+        onSelectTab={(tab) => setActiveTab(tab)} 
+      />
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
@@ -222,11 +227,18 @@ export default function Home() {
           apiKey={apiKey}
           onSaveApiKey={(key) => setApiKey(key)}
           assessmentData={assessmentData}
+          activeTab={activeTab}
+          onSelectTab={(tab) => setActiveTab(tab)}
         />
 
         {/* Main Body */}
         <main className="flex-1 flex flex-col overflow-hidden relative">
-          {!assessmentData ? (
+          {activeTab !== 'exams' ? (
+            <StaticPageViews 
+              tab={activeTab} 
+              onGoToExams={() => setActiveTab('exams')} 
+            />
+          ) : !assessmentData ? (
             <FileUploadSection
               onProcess={handleProcessUpload}
               onLoadDemo={handleLoadDemo}
