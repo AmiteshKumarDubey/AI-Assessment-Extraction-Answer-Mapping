@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 15, 23, 42;
-  --background-end-rgb: 15, 23, 42;
+  --foreground-rgb: 15, 23, 42;
+  --background-start-rgb: 248, 250, 252;
+  --background-end-rgb: 241, 245, 249;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background-color: #0F172A;
+  background-color: #f8fafc;
   min-height: 100vh;
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
 }
@@ -22,19 +22,19 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(226, 232, 240, 0.6);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.4);
+  background: rgba(203, 213, 225, 0.8);
   border-radius: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.7);
+  background: rgba(148, 163, 184, 0.9);
 }
 
-/* Hide Floating Next.js Dev Badge ("N" icon) */
+/* Hide Floating Next.js Dev Badge */
 nextjs-portal,
 [data-next-badge],
 div[class*="dev-indicator"],

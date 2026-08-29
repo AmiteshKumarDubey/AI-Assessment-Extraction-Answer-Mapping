@@ -10,9 +10,8 @@ import {
   Loader2,
   FileCheck,
   Download,
-  ShieldCheck,
   CheckCircle2,
-  Layers
+  X
 } from 'lucide-react';
 import { ProcessingProgress } from '@/types/assessment';
 
@@ -52,36 +51,38 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
   const isProcessing = progress.step !== 'idle' && progress.step !== 'complete' && progress.step !== 'error';
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10 space-y-8 animate-fade-in">
-      {/* Intro Hero Section */}
-      <div className="text-center space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-semibold">
-          <ShieldCheck className="w-3.5 h-3.5" />
-          Automated Question Extraction &amp; Dynamic Answer Mapping
+    <div className="max-w-4xl mx-auto px-4 py-12 space-y-8 animate-fade-in">
+      {/* Teacher Avatar Illustration Circle (Figma Design) */}
+      <div className="flex flex-col items-center justify-center space-y-4 text-center">
+        <div className="w-20 h-20 rounded-full bg-orange-100 border-4 border-white shadow-lg flex items-center justify-center relative">
+          <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-white font-extrabold text-xl shadow-inner">
+            MR
+          </div>
+          <span className="absolute -bottom-1 -right-1 p-1.5 rounded-full bg-slate-900 text-white shadow-md">
+            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+          </span>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-100 tracking-tight">
-          Upload Question Paper &amp; Student Answer Sheet
-        </h2>
-        <p className="text-sm sm:text-base text-slate-400 max-w-2xl mx-auto leading-relaxed">
-          Extract printed questions (including sub-parts 11a, 11b), map handwritten responses out of order, calculate scores, and highlight exact answer sheet regions.
-        </p>
+
+        <div>
+          <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+            Upload <span className="text-orange-500">Question Paper &amp; Answer Sheets</span>
+          </h2>
+          <p className="text-xs sm:text-sm font-semibold text-slate-500 mt-1">
+            Upload both files to get started
+          </p>
+        </div>
       </div>
 
-      {/* Prominent Demo Hero CTA Banner */}
-      <div className="bg-gradient-to-r from-[#1E293B] via-[#1E293B] to-[#131c2e] border border-indigo-500/30 rounded-2xl p-6 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-5 relative overflow-hidden group">
-        <div className="flex items-center gap-4 relative z-10">
-          <div className="p-3.5 rounded-2xl bg-[#6366F1]/20 text-indigo-400 border border-indigo-500/30 shadow-inner">
-            <Sparkles className="w-6 h-6 text-amber-300 animate-pulse" />
+      {/* Prominent Demo 1-Click Banner */}
+      <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-3.5">
+          <div className="p-3 rounded-xl bg-orange-50 text-orange-500 border border-orange-200">
+            <Sparkles className="w-5 h-5" />
           </div>
           <div>
-            <div className="flex items-center gap-2 mb-0.5">
-              <h3 className="font-extrabold text-slate-100 text-base">Want 1-Click Evaluation?</h3>
-              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-300 border border-amber-500/20">
-                Recommended
-              </span>
-            </div>
-            <p className="text-xs text-slate-400">
-              Includes Physics Grade 11 exam, sub-parts 11(a)/11(b), multi-page answers, and out-of-order responses.
+            <h3 className="font-bold text-slate-900 text-sm sm:text-base">Want 1-Click Evaluation?</h3>
+            <p className="text-xs text-slate-500">
+              Pre-loaded with Physics exam, sub-parts 11(a)/11(b), multi-page answers, and out-of-order responses.
             </p>
           </div>
         </div>
@@ -89,7 +90,7 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
         <button
           onClick={onLoadDemo}
           disabled={isProcessing}
-          className="whitespace-nowrap px-6 py-3 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-[#6366F1] to-indigo-600 hover:from-indigo-500 hover:to-indigo-500 text-white shadow-xl shadow-indigo-600/30 transition-all hover:scale-[1.03] active:scale-[0.98] flex items-center gap-2.5 relative z-10 shrink-0"
+          className="whitespace-nowrap px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-orange-500 hover:bg-orange-600 text-white shadow-md shadow-orange-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center gap-2"
         >
           <span>Try Pre-Loaded Demo Paper</span>
           <ArrowRight className="w-4 h-4" />
@@ -97,25 +98,25 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
       </div>
 
       {/* Main Upload Form */}
-      <form onSubmit={handleSubmit} className="bg-[#1E293B] border border-[#334155] rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6">
+      <form onSubmit={handleSubmit} className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Question Paper Dropzone */}
-          <div className="space-y-2.5">
-            <div className="flex items-center justify-between">
-              <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-indigo-400" />
-                1. Question Paper (PDF / Images)
-              </label>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between px-1">
+              <span className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                <FileText className="w-3.5 h-3.5 text-orange-500" />
+                Upload Question Paper
+              </span>
               <a
                 href="/samples/Question_Paper.pdf"
                 download="Question_Paper.pdf"
-                className="text-[11px] font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1 hover:underline"
+                className="text-[11px] font-semibold text-orange-500 hover:text-orange-600 flex items-center gap-1 hover:underline"
               >
                 <Download className="w-3 h-3" /> Sample PDF
               </a>
             </div>
 
-            <div className="relative border-2 border-dashed border-[#334155] hover:border-[#6366F1] rounded-2xl p-6 text-center transition-all bg-[#0F172A] group">
+            <div className="relative border-2 border-dashed border-slate-300 hover:border-orange-400 rounded-2xl p-6 text-center transition-all bg-slate-50/60 group">
               <input
                 type="file"
                 multiple
@@ -124,21 +125,24 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
                 disabled={isProcessing}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
               />
-              <div className="space-y-2.5 flex flex-col items-center justify-center">
-                <div className="w-12 h-12 rounded-xl bg-[#1E293B] group-hover:bg-[#6366F1]/20 text-indigo-400 flex items-center justify-center transition-colors">
+              <div className="space-y-2 flex flex-col items-center justify-center">
+                <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 shadow-xs group-hover:border-orange-300 text-orange-500 flex items-center justify-center transition-colors">
                   <FileText className="w-6 h-6" />
                 </div>
                 {qpFiles.length > 0 ? (
-                  <div className="text-xs font-medium text-emerald-400 flex items-center gap-1.5 bg-emerald-500/10 px-3 py-1.5 rounded-lg border border-emerald-500/30">
-                    <FileCheck className="w-4 h-4" />
-                    <span>{qpFiles.length} file(s) selected</span>
+                  <div className="space-y-1">
+                    <div className="text-xs font-bold text-emerald-600 flex items-center justify-center gap-1.5 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200">
+                      <FileCheck className="w-4 h-4" />
+                      <span>{qpFiles.length} File(s) Ready</span>
+                    </div>
+                    <p className="text-[10px] text-slate-400">{qpFiles.map(f => f.name).join(', ')}</p>
                   </div>
                 ) : (
                   <>
-                    <p className="text-xs font-semibold text-slate-200">
-                      Drop Question Paper here or <span className="text-[#6366F1] underline">browse</span>
+                    <p className="text-xs font-bold text-slate-700">
+                      Upload <span className="text-orange-500">Question Paper</span>
                     </p>
-                    <p className="text-[11px] text-slate-500">Supports PDF, PNG, JPG (e.g., Q1 to Q5, Q11a/b)</p>
+                    <p className="text-[11px] text-slate-400 font-medium">PDF or Images (Max 10MB)</p>
                   </>
                 )}
               </div>
@@ -146,22 +150,22 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
           </div>
 
           {/* Student Answer Sheet Dropzone */}
-          <div className="space-y-2.5">
-            <div className="flex items-center justify-between">
-              <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                <Upload className="w-4 h-4 text-purple-400" />
-                2. Student Answer Sheet (PDF / Images)
-              </label>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between px-1">
+              <span className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                <Upload className="w-3.5 h-3.5 text-orange-500" />
+                Upload Answer Sheet
+              </span>
               <a
                 href="/samples/Student_Answer_Sheet.pdf"
                 download="Student_Answer_Sheet.pdf"
-                className="text-[11px] font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1 hover:underline"
+                className="text-[11px] font-semibold text-orange-500 hover:text-orange-600 flex items-center gap-1 hover:underline"
               >
                 <Download className="w-3 h-3" /> Sample PDF
               </a>
             </div>
 
-            <div className="relative border-2 border-dashed border-[#334155] hover:border-purple-500/60 rounded-2xl p-6 text-center transition-all bg-[#0F172A] group">
+            <div className="relative border-2 border-dashed border-slate-300 hover:border-orange-400 rounded-2xl p-6 text-center transition-all bg-slate-50/60 group">
               <input
                 type="file"
                 multiple
@@ -170,21 +174,24 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
                 disabled={isProcessing}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
               />
-              <div className="space-y-2.5 flex flex-col items-center justify-center">
-                <div className="w-12 h-12 rounded-xl bg-[#1E293B] group-hover:bg-purple-500/20 text-purple-400 flex items-center justify-center transition-colors">
+              <div className="space-y-2 flex flex-col items-center justify-center">
+                <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 shadow-xs group-hover:border-orange-300 text-orange-500 flex items-center justify-center transition-colors">
                   <Upload className="w-6 h-6" />
                 </div>
                 {ansFiles.length > 0 ? (
-                  <div className="text-xs font-medium text-emerald-400 flex items-center gap-1.5 bg-emerald-500/10 px-3 py-1.5 rounded-lg border border-emerald-500/30">
-                    <FileCheck className="w-4 h-4" />
-                    <span>{ansFiles.length} file(s) selected</span>
+                  <div className="space-y-1">
+                    <div className="text-xs font-bold text-emerald-600 flex items-center justify-center gap-1.5 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200">
+                      <FileCheck className="w-4 h-4" />
+                      <span>{ansFiles.length} File(s) Ready</span>
+                    </div>
+                    <p className="text-[10px] text-slate-400">{ansFiles.map(f => f.name).join(', ')}</p>
                   </div>
                 ) : (
                   <>
-                    <p className="text-xs font-semibold text-slate-200">
-                      Drop Answer Sheet here or <span className="text-purple-400 underline">browse</span>
+                    <p className="text-xs font-bold text-slate-700">
+                      Upload <span className="text-orange-500">Answer Sheet</span>
                     </p>
-                    <p className="text-[11px] text-slate-500">Handwritten pages (supports multi-page spans)</p>
+                    <p className="text-[11px] text-slate-400 font-medium">Handwritten Pages (Max 10MB)</p>
                   </>
                 )}
               </div>
@@ -192,54 +199,54 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
           </div>
         </div>
 
-        {/* Processing Progress Bar & Status */}
+        {/* Processing Progress Loader */}
         {isProcessing && (
-          <div className="bg-[#0F172A] border border-[#334155] rounded-2xl p-5 space-y-3.5 shadow-inner">
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-3 shadow-inner">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-slate-200 flex items-center gap-2">
-                <Loader2 className="w-4 h-4 text-indigo-400 animate-spin" />
+              <span className="font-bold text-slate-800 flex items-center gap-2">
+                <Loader2 className="w-4 h-4 text-orange-500 animate-spin" />
                 {progress.message}
               </span>
-              <span className="font-mono font-extrabold text-[#6366F1]">{progress.progress}%</span>
+              <span className="font-mono font-extrabold text-orange-500">{progress.progress}%</span>
             </div>
-            <div className="w-full h-2.5 rounded-full bg-[#1E293B] overflow-hidden">
+            <div className="w-full h-2.5 rounded-full bg-slate-200 overflow-hidden">
               <div
-                className="h-full bg-[#6366F1] transition-all duration-300 ease-out"
+                className="h-full bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-300 ease-out"
                 style={{ width: `${progress.progress}%` }}
               />
             </div>
-            <div className="grid grid-cols-4 text-[11px] text-slate-400 font-semibold text-center pt-1">
-              <span className={progress.progress >= 20 ? 'text-indigo-400 font-extrabold' : ''}>1. Ingest Files</span>
-              <span className={progress.progress >= 40 ? 'text-indigo-400 font-extrabold' : ''}>2. Extract Questions</span>
-              <span className={progress.progress >= 70 ? 'text-indigo-400 font-extrabold' : ''}>3. OCR Handwriting</span>
-              <span className={progress.progress >= 95 ? 'text-indigo-400 font-extrabold' : ''}>4. Map &amp; Grade</span>
+            <div className="grid grid-cols-4 text-[10px] text-slate-500 font-semibold text-center pt-1">
+              <span className={progress.progress >= 20 ? 'text-orange-600 font-bold' : ''}>1. Ingest Files</span>
+              <span className={progress.progress >= 40 ? 'text-orange-600 font-bold' : ''}>2. Extract Questions</span>
+              <span className={progress.progress >= 70 ? 'text-orange-600 font-bold' : ''}>3. OCR Handwriting</span>
+              <span className={progress.progress >= 95 ? 'text-orange-600 font-bold' : ''}>4. Map &amp; Grade</span>
             </div>
           </div>
         )}
 
-        {/* Submit Process Button */}
-        <div className="flex items-center justify-between pt-2">
-          <p className="text-xs text-slate-400 hidden sm:block">
-            Need sample files to test? Download the sample PDFs above.
+        {/* Start Mapping Primary Button (Figma Design) */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+          <p className="text-xs text-slate-400">
+            Once both files are uploaded, you'll be able to map answers with questions.
           </p>
           <button
             type="submit"
             disabled={qpFiles.length === 0 || ansFiles.length === 0 || isProcessing}
-            className={`w-full sm:w-auto px-8 py-3 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all ${
+            className={`w-full sm:w-auto px-8 py-3 rounded-full font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md ${
               qpFiles.length > 0 && ansFiles.length > 0 && !isProcessing
-                ? 'bg-[#6366F1] hover:bg-indigo-500 text-white shadow-xl hover:scale-[1.02] active:scale-[0.98]'
-                : 'bg-[#0F172A] text-slate-500 cursor-not-allowed border border-[#334155]'
+                ? 'bg-slate-900 hover:bg-slate-800 text-white shadow-slate-900/20 hover:scale-[1.02] active:scale-[0.98]'
+                : 'bg-slate-200 text-slate-400 cursor-not-allowed border border-slate-300'
             }`}
           >
             {isProcessing ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin text-white" />
-                <span>Processing Files...</span>
+                <span>Processing...</span>
               </>
             ) : (
               <>
-                <Sparkles className="w-4 h-4" />
-                <span>Process Files &amp; Map Answers</span>
+                <span>Start Mapping</span>
+                <ArrowRight className="w-4 h-4" />
               </>
             )}
           </button>

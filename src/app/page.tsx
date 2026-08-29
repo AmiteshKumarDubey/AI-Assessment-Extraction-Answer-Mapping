@@ -9,6 +9,7 @@ import {
   FilterStatus 
 } from '@/types/assessment';
 import { DEMO_ASSESSMENT } from '@/lib/demoData';
+import { Sidebar } from '@/components/Sidebar';
 import { Header } from '@/components/Header';
 import { FileUploadSection } from '@/components/FileUploadSection';
 import { SummaryHeader } from '@/components/SummaryHeader';
@@ -207,65 +208,71 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#0F172A] font-sans text-white">
-      {/* Header Bar */}
-      <Header
-        onLoadDemo={handleLoadDemo}
-        onReset={handleReset}
-        hasData={!!assessmentData}
-        apiKey={apiKey}
-        onSaveApiKey={(key) => setApiKey(key)}
-        assessmentData={assessmentData}
-      />
+    <div className="flex h-screen overflow-hidden bg-[#f8fafc] font-sans text-slate-900">
+      {/* Left App Shell Sidebar (Figma Design) */}
+      <Sidebar />
 
-      {/* Main Workspace */}
-      <main className="flex-1 flex flex-col overflow-hidden">
-        {!assessmentData ? (
-          <FileUploadSection
-            onProcess={handleProcessUpload}
-            onLoadDemo={handleLoadDemo}
-            progress={progress}
-          />
-        ) : (
-          <div className="flex-1 flex flex-col overflow-hidden">
-            {/* Top Assessment Summary Bar */}
-            <SummaryHeader
-              summary={assessmentData.summary}
-              activeFilter={activeFilter}
-              onSelectFilter={(filter) => setActiveFilter(filter)}
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+        {/* Top Navigation Bar */}
+        <Header
+          onLoadDemo={handleLoadDemo}
+          onReset={handleReset}
+          hasData={!!assessmentData}
+          apiKey={apiKey}
+          onSaveApiKey={(key) => setApiKey(key)}
+          assessmentData={assessmentData}
+        />
+
+        {/* Main Body */}
+        <main className="flex-1 flex flex-col overflow-hidden relative">
+          {!assessmentData ? (
+            <FileUploadSection
+              onProcess={handleProcessUpload}
+              onLoadDemo={handleLoadDemo}
+              progress={progress}
             />
-
-            {/* Split Pane View */}
-            <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
-              {/* Left Pane: Question Navigator */}
-              <QuestionList
-                questions={assessmentData.questions}
-                answers={assessmentData.answers}
-                selectedQuestionId={selectedQuestionId}
-                selectedAnswerId={selectedAnswerId}
-                onSelectQuestion={handleSelectQuestion}
+          ) : (
+            <div className="flex-1 flex flex-col overflow-hidden">
+              {/* Summary Header */}
+              <SummaryHeader
+                summary={assessmentData.summary}
                 activeFilter={activeFilter}
+                onSelectFilter={(filter) => setActiveFilter(filter)}
               />
 
-              {/* Right Pane: Interactive Document Canvas Viewer */}
-              <AnswerViewer
-                answerSheetImages={assessmentData.answerSheetImages}
-                questionPaperImages={assessmentData.questionPaperImages}
-                activeAnswer={activeAnswer}
-                activeQuestion={activeQuestion}
-                allAnswers={assessmentData.answers}
+              {/* Split Pane View */}
+              <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
+                {/* Left Pane: Extracted Questions */}
+                <QuestionList
+                  questions={assessmentData.questions}
+                  answers={assessmentData.answers}
+                  selectedQuestionId={selectedQuestionId}
+                  selectedAnswerId={selectedAnswerId}
+                  onSelectQuestion={handleSelectQuestion}
+                  activeFilter={activeFilter}
+                />
+
+                {/* Right Pane: Scanned Document Viewer */}
+                <AnswerViewer
+                  answerSheetImages={assessmentData.answerSheetImages}
+                  questionPaperImages={assessmentData.questionPaperImages}
+                  activeAnswer={activeAnswer}
+                  activeQuestion={activeQuestion}
+                  allAnswers={assessmentData.answers}
+                />
+              </div>
+
+              {/* Bottom Inspector Panel */}
+              <QuestionDetailPanel
+                question={activeQuestion}
+                answer={activeAnswer}
+                onUpdateScore={handleUpdateScore}
               />
             </div>
-
-            {/* Bottom Inspector Panel */}
-            <QuestionDetailPanel
-              question={activeQuestion}
-              answer={activeAnswer}
-              onUpdateScore={handleUpdateScore}
-            />
-          </div>
-        )}
-      </main>
+          )}
+        </main>
+      </div>
     </div>
   );
 }
