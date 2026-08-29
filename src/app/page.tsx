@@ -218,7 +218,7 @@ export default function Home() {
       />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         {/* Top Navigation Bar */}
         <Header
           onLoadDemo={handleLoadDemo}
@@ -231,8 +231,8 @@ export default function Home() {
           onSelectTab={(tab) => setActiveTab(tab)}
         />
 
-        {/* Main Body */}
-        <main className="flex-1 flex flex-col overflow-hidden relative">
+        {/* Main Body Container */}
+        <main className="flex-1 flex flex-col min-h-0 overflow-y-auto custom-scrollbar relative">
           {activeTab !== 'exams' ? (
             <StaticPageViews 
               tab={activeTab} 
@@ -245,17 +245,19 @@ export default function Home() {
               progress={progress}
             />
           ) : (
-            <div className="flex-1 flex flex-col overflow-hidden">
+            <div className="flex-1 flex flex-col min-h-0">
               {/* Summary Header */}
-              <SummaryHeader
-                summary={assessmentData.summary}
-                activeFilter={activeFilter}
-                onSelectFilter={(filter) => setActiveFilter(filter)}
-              />
+              <div className="shrink-0">
+                <SummaryHeader
+                  summary={assessmentData.summary}
+                  activeFilter={activeFilter}
+                  onSelectFilter={(filter) => setActiveFilter(filter)}
+                />
+              </div>
 
-              {/* Split Pane View */}
-              <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
-                {/* Left Pane: Extracted Questions */}
+              {/* Full Viewport Cascading Split-Pane Workspace */}
+              <div className="h-[calc(100vh-140px)] min-h-[550px] shrink-0 flex flex-col lg:flex-row border-b border-slate-200 overflow-hidden relative">
+                {/* Left Pane: Extracted Questions (Independent Scroll) */}
                 <QuestionList
                   questions={assessmentData.questions}
                   answers={assessmentData.answers}
@@ -265,7 +267,7 @@ export default function Home() {
                   activeFilter={activeFilter}
                 />
 
-                {/* Right Pane: Scanned Document Viewer */}
+                {/* Right Pane: Scanned Document Viewer (Independent Scroll) */}
                 <AnswerViewer
                   answerSheetImages={assessmentData.answerSheetImages}
                   questionPaperImages={assessmentData.questionPaperImages}
@@ -275,12 +277,14 @@ export default function Home() {
                 />
               </div>
 
-              {/* Bottom Inspector Panel */}
-              <QuestionDetailPanel
-                question={activeQuestion}
-                answer={activeAnswer}
-                onUpdateScore={handleUpdateScore}
-              />
+              {/* Bottom Question Detail Section */}
+              <div className="shrink-0">
+                <QuestionDetailPanel
+                  question={activeQuestion}
+                  answer={activeAnswer}
+                  onUpdateScore={handleUpdateScore}
+                />
+              </div>
             </div>
           )}
         </main>
