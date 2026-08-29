@@ -224,7 +224,7 @@ export const AnswerViewer: React.FC<AnswerViewerProps> = ({
                     <div
                       key={ans.id}
                       ref={isActive ? activeBoxRef : null}
-                      className={`absolute rounded-2xl border-2 transition-all duration-300 pointer-events-auto pt-4 ${
+                      className={`absolute rounded-2xl border-2 transition-all duration-300 pointer-events-auto ${
                         isActive
                           ? 'border-orange-500 bg-orange-500/15 ring-4 ring-orange-500/25 shadow-lg z-30 animate-pulse'
                           : 'border-orange-400/40 bg-orange-500/5 hover:border-orange-500 hover:bg-orange-500/10 z-10'
@@ -238,8 +238,11 @@ export const AnswerViewer: React.FC<AnswerViewerProps> = ({
                         minWidth: '220px',
                       }}
                     >
-                      {/* Floating Badge Header: Positioned FULLY ABOVE top border (-top-8.5) with zero answer text overlap */}
-                      <div className="absolute -top-8.5 left-2 z-40 flex flex-row items-center gap-1.5 whitespace-nowrap pointer-events-none">
+                      {/* Floating Badge Header: Exact Tailwind arbitrary class -top-[34px] to ensure top: -34px CSS rule */}
+                      <div 
+                        className="absolute -top-[34px] left-2 z-40 flex flex-row items-center gap-1.5 whitespace-nowrap pointer-events-none"
+                        style={{ top: '-34px' }}
+                      >
                         <span className={`px-2.5 py-0.5 rounded-md font-mono font-bold text-[11px] shadow-sm flex items-center gap-1 ${
                           isActive
                             ? 'bg-slate-900 text-white ring-2 ring-orange-400'
