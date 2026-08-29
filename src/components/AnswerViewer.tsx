@@ -192,11 +192,11 @@ export const AnswerViewer: React.FC<AnswerViewerProps> = ({
       {/* Synchronized Custom Canvas Scroll Workspace */}
       <div 
         ref={containerRef}
-        className="flex-1 overflow-y-auto p-6 pt-12 pb-32 flex items-start justify-center relative bg-[#f8fafc] custom-scrollbar"
+        className="flex-1 overflow-y-auto p-6 pt-8 pb-32 flex items-start justify-center relative bg-[#f8fafc] custom-scrollbar"
       >
         {activeDocSrc ? (
           <div 
-            className="relative transition-transform duration-200 ease-out origin-top shadow-xl rounded-2xl border border-slate-200 bg-white inline-block mb-24 mt-6"
+            className="relative transition-transform duration-200 ease-out origin-top shadow-xl rounded-2xl border border-slate-200 bg-white inline-block mb-24 mt-4"
             style={{ transform: `scale(${zoomLevel})` }}
           >
             {/* Render document page image */}
@@ -238,15 +238,12 @@ export const AnswerViewer: React.FC<AnswerViewerProps> = ({
                         minWidth: '220px',
                       }}
                     >
-                      {/* Floating Badge Header: Exact Tailwind arbitrary class -top-[34px] to ensure top: -34px CSS rule */}
-                      <div 
-                        className="absolute -top-[34px] left-2 z-40 flex flex-row items-center gap-1.5 whitespace-nowrap pointer-events-none"
-                        style={{ top: '-34px' }}
-                      >
-                        <span className={`px-2.5 py-0.5 rounded-md font-mono font-bold text-[11px] shadow-sm flex items-center gap-1 ${
+                      {/* Floating Badge Header: Positioned INSIDE TOP-RIGHT CORNER (top-2.5 right-3) -> Zero text overlap & Zero adjacent box overlap! */}
+                      <div className="absolute top-2.5 right-3 z-40 flex flex-row items-center gap-1.5 whitespace-nowrap pointer-events-none">
+                        <span className={`px-2.5 py-1 rounded-lg font-mono font-bold text-[11px] shadow-sm flex items-center gap-1 ${
                           isActive
-                            ? 'bg-slate-900 text-white ring-2 ring-orange-400'
-                            : 'bg-white text-slate-800 border border-slate-200'
+                            ? 'bg-slate-900 text-white ring-2 ring-orange-400 shadow-md'
+                            : 'bg-white text-slate-800 border border-slate-200 shadow-xs'
                         }`}>
                           <Sparkles className="w-3 h-3 text-orange-400" />
                           {ans.detectedQuestionLabel}
@@ -254,7 +251,7 @@ export const AnswerViewer: React.FC<AnswerViewerProps> = ({
                         </span>
 
                         {ans.isOutOfOrder && (
-                          <span className="px-2.5 py-0.5 rounded-md bg-amber-500 text-white font-mono font-extrabold text-[10px] uppercase shadow-xs">
+                          <span className="px-2.5 py-1 rounded-lg bg-amber-500 text-white font-mono font-extrabold text-[10px] uppercase shadow-xs">
                             OUT OF ORDER
                           </span>
                         )}
