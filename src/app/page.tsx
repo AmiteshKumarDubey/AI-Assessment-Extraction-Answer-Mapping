@@ -218,7 +218,7 @@ export default function Home() {
       />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Top Navigation Bar */}
         <Header
           onLoadDemo={handleLoadDemo}
@@ -231,8 +231,8 @@ export default function Home() {
           onSelectTab={(tab) => setActiveTab(tab)}
         />
 
-        {/* Main Body Container */}
-        <main className="flex-1 flex flex-col min-h-0 overflow-y-auto custom-scrollbar relative">
+        {/* Main Body */}
+        <main className="flex-1 flex flex-col overflow-hidden relative">
           {activeTab !== 'exams' ? (
             <StaticPageViews 
               tab={activeTab} 
@@ -245,19 +245,18 @@ export default function Home() {
               progress={progress}
             />
           ) : (
-            <div className="flex-1 flex flex-col min-h-0">
+            /* Outer Scroll Container when Assessment Workspace is Active */
+            <div className="flex-1 flex flex-col overflow-y-auto custom-scrollbar bg-[#f8fafc]">
               {/* Summary Header */}
-              <div className="shrink-0">
-                <SummaryHeader
-                  summary={assessmentData.summary}
-                  activeFilter={activeFilter}
-                  onSelectFilter={(filter) => setActiveFilter(filter)}
-                />
-              </div>
+              <SummaryHeader
+                summary={assessmentData.summary}
+                activeFilter={activeFilter}
+                onSelectFilter={(filter) => setActiveFilter(filter)}
+              />
 
-              {/* Full Viewport Cascading Split-Pane Workspace */}
-              <div className="h-[calc(100vh-140px)] min-h-[550px] shrink-0 flex flex-col lg:flex-row border-b border-slate-200 overflow-hidden relative">
-                {/* Left Pane: Extracted Questions (Independent Scroll) */}
+              {/* Two-Panel Split View: Occupies full remaining viewport height (calc(100vh - 145px) on desktop) */}
+              <div className="flex-1 flex flex-col lg:flex-row min-h-[580px] lg:h-[calc(100vh-145px)] shrink-0 overflow-hidden border-b border-slate-200 shadow-xs">
+                {/* Left Pane: Extracted Questions */}
                 <QuestionList
                   questions={assessmentData.questions}
                   answers={assessmentData.answers}
@@ -267,7 +266,7 @@ export default function Home() {
                   activeFilter={activeFilter}
                 />
 
-                {/* Right Pane: Scanned Document Viewer (Independent Scroll) */}
+                {/* Right Pane: Scanned Document Viewer */}
                 <AnswerViewer
                   answerSheetImages={assessmentData.answerSheetImages}
                   questionPaperImages={assessmentData.questionPaperImages}
@@ -277,7 +276,7 @@ export default function Home() {
                 />
               </div>
 
-              {/* Bottom Question Detail Section */}
+              {/* Bottom Question Detail Section (Deliberate clean boundary below split view) */}
               <div className="shrink-0">
                 <QuestionDetailPanel
                   question={activeQuestion}
