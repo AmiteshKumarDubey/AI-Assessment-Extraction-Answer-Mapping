@@ -33,14 +33,31 @@ export const AnswerViewer: React.FC<AnswerViewerProps> = ({
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [zoomLevel, setZoomLevel] = useState<number>(1);
   const containerRef = useRef<HTMLDivElement>(null);
+  const activeBoxRef = useRef<HTMLDivElement>(null);
 
-  // Automatically switch page when active answer selection changes
+  // Automatically switch page & smooth scroll to active answer box
   useEffect(() => {
     if (activeAnswer && viewMode === 'answer_sheet') {
       const targetPage = activeAnswer.pageIndex;
       if (targetPage >= 0 && targetPage < (answerSheetImages.length || 1)) {
         setCurrentPage(targetPage);
       }
+
+      // Smooth scroll to active answer region inside canvas viewport
+      setTimeout(() => {
+        if (activeBoxRef.current && containerRef.current) {
+          const container = containerRef.current;
+          const box = activeBoxRef.current;
+          const containerHeight = container.clientHeight;
+          const boxTop = box.offsetTop;
+          const boxHeight = box.offsetHeight;
+
+          container.scrollTo({
+            top: Math.max(0, boxTop - containerHeight / 2 + boxHeight / 2),
+            behavior: 'smooth',
+          });
+        }
+      }, 100);
     }
   }, [activeAnswer, viewMode, answerSheetImages]);
 
@@ -67,7 +84,7 @@ export const AnswerViewer: React.FC<AnswerViewerProps> = ({
   return (
     <div className="flex-1 flex flex-col h-full bg-[#f8fafc] text-slate-900 relative overflow-hidden">
       {/* Custom Viewport Toolbar */}
-      <div className="h-12 bg-white border-b border-slate-200 px-4 flex items-center justify-between z-20 shadow-xs">
+      <div className="h-12 bg-white border-b border-slate-200 px-4 flex items-center justify-between z-20 shadow-xs shrink-0">
         {/* Toggle Mode Control */}
         <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
           <button
@@ -175,11 +192,11 @@ export const AnswerViewer: React.FC<AnswerViewerProps> = ({
       {/* Synchronized Custom Canvas Scroll Workspace */}
       <div 
         ref={containerRef}
-        className="flex-1 overflow-auto p-5 flex items-start justify-center relative bg-[#f8fafc] custom-scrollbar"
+        className="flex-1 overflow-y-auto p-6 pb-32 flex items-start justify-center relative bg-[#f8fafc] custom-scrollbar"
       >
         {activeDocSrc ? (
           <div 
-            className="relative transition-transform duration-200 ease-out origin-top shadow-xl rounded-2xl border border-slate-200 bg-white inline-block overflow-hidden"
+            className="relative transition-transform duration-200 ease-out origin-top shadow-xl rounded-2xl border border-slate-200 bg-white inline-block mb-24"
             style={{ transform: `scale(${zoomLevel})` }}
           >
             {/* Render document page image */}
@@ -206,6 +223,7 @@ export const AnswerViewer: React.FC<AnswerViewerProps> = ({
                   return (
                     <div
                       key={ans.id}
+                      ref={isActive ? activeBoxRef : null}
                       className={`absolute rounded-2xl border-2 transition-all duration-300 pointer-events-auto ${
                         isActive
                           ? 'border-orange-500 bg-orange-500/15 ring-4 ring-orange-500/25 shadow-lg z-30 animate-pulse'
@@ -216,6 +234,8 @@ export const AnswerViewer: React.FC<AnswerViewerProps> = ({
                         top: `${box.y}%`,
                         width: `${box.width}%`,
                         height: `${box.height}%`,
+                        minHeight: '64px',
+                        minWidth: '220px',
                       }}
                     >
                       {/* Bounding Box Badges Flex Wrapper */}
