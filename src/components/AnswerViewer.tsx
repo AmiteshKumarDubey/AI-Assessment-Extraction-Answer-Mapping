@@ -192,11 +192,11 @@ export const AnswerViewer: React.FC<AnswerViewerProps> = ({
       {/* Synchronized Custom Canvas Scroll Workspace */}
       <div 
         ref={containerRef}
-        className="flex-1 overflow-y-auto p-6 pb-32 flex items-start justify-center relative bg-[#f8fafc] custom-scrollbar"
+        className="flex-1 overflow-y-auto p-6 pt-10 pb-32 flex items-start justify-center relative bg-[#f8fafc] custom-scrollbar"
       >
         {activeDocSrc ? (
           <div 
-            className="relative transition-transform duration-200 ease-out origin-top shadow-xl rounded-2xl border border-slate-200 bg-white inline-block mb-24"
+            className="relative transition-transform duration-200 ease-out origin-top shadow-xl rounded-2xl border border-slate-200 bg-white inline-block mb-24 mt-4"
             style={{ transform: `scale(${zoomLevel})` }}
           >
             {/* Render document page image */}
@@ -238,9 +238,9 @@ export const AnswerViewer: React.FC<AnswerViewerProps> = ({
                         minWidth: '220px',
                       }}
                     >
-                      {/* Bounding Box Badges Flex Wrapper */}
-                      <div className="absolute -top-3.5 left-2 z-40 flex flex-row items-center gap-1.5 whitespace-nowrap pointer-events-none">
-                        <span className={`px-2 py-0.5 rounded-md font-mono font-bold text-[11px] shadow-sm flex items-center gap-1 ${
+                      {/* Floating Badge Header: Positioned FULLY ABOVE the bounding box top border (-top-7.5) with zero text overlap */}
+                      <div className="absolute -top-7.5 left-2 z-40 flex flex-row items-center gap-1.5 whitespace-nowrap pointer-events-none">
+                        <span className={`px-2.5 py-0.5 rounded-md font-mono font-bold text-[11px] shadow-sm flex items-center gap-1 ${
                           isActive
                             ? 'bg-slate-900 text-white ring-2 ring-orange-400'
                             : 'bg-white text-slate-800 border border-slate-200'
@@ -251,7 +251,7 @@ export const AnswerViewer: React.FC<AnswerViewerProps> = ({
                         </span>
 
                         {ans.isOutOfOrder && (
-                          <span className="px-2 py-0.5 rounded-md bg-amber-500 text-white font-mono font-extrabold text-[10px] uppercase shadow-xs">
+                          <span className="px-2.5 py-0.5 rounded-md bg-amber-500 text-white font-mono font-extrabold text-[10px] uppercase shadow-xs">
                             OUT OF ORDER
                           </span>
                         )}
