@@ -17,7 +17,6 @@ import { AnswerViewer } from '@/components/AnswerViewer';
 import { QuestionDetailPanel } from '@/components/QuestionDetailPanel';
 
 export default function Home() {
-  // Default state is null so teacher lands on Core File Upload screen
   const [assessmentData, setAssessmentData] = useState<AssessmentData | null>(null);
   const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
   const [selectedAnswerId, setSelectedAnswerId] = useState<string | null>(null);
@@ -30,7 +29,6 @@ export default function Home() {
     message: ''
   });
 
-  // Demo loading with step progress animation for visual fidelity
   const handleLoadDemo = async () => {
     setProgress({
       step: 'uploading',
@@ -70,7 +68,6 @@ export default function Home() {
       setSelectedAnswerId(ans1?.id || null);
     }
 
-    // Reset progress step after loading
     setTimeout(() => {
       setProgress({ step: 'idle', progress: 0, message: '' });
     }, 500);
@@ -83,7 +80,6 @@ export default function Home() {
     setProgress({ step: 'idle', progress: 0, message: '' });
   };
 
-  // Convert File to Base64 string
   const fileToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -211,7 +207,7 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-950 font-sans text-white">
+    <div className="flex flex-col min-h-screen bg-[#0F172A] font-sans text-white">
       {/* Header Bar */}
       <Header
         onLoadDemo={handleLoadDemo}
@@ -219,6 +215,7 @@ export default function Home() {
         hasData={!!assessmentData}
         apiKey={apiKey}
         onSaveApiKey={(key) => setApiKey(key)}
+        assessmentData={assessmentData}
       />
 
       {/* Main Workspace */}
